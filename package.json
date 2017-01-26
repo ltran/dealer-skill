@@ -1,0 +1,19 @@
+{
+  "name": "dealer-skill",
+  "version": "1.0.0",
+  "description": "Gets the deals",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ltran/dealer-skill.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ltran/dealer-skill/issues"
+  },
+  "homepage": "https://github.com/ltran/dealer-skill#readme"
+}
