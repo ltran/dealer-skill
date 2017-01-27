@@ -30,6 +30,39 @@
       "intent": "SupportedCentresIntent"
     },
     {
+      "intent": "AIIntent"
+    },
+    {
+      "intent": "PretzelIntent"
+    },
+    {
+      "intent": "EventsIntent",
+      "slots": [
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        }
+      ]
+    },
+    {
+      "intent": "DealIntent",
+      "slots": [
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        }
+      ]
+    },
+    {
+      "intent": "RetailerDealsIntent",
+      "slots":[
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        }
+      ]
+    },
+    {
       "intent": "AMAZON.HelpIntent"
     },
     {

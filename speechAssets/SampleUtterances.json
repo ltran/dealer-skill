@@ -23,3 +23,26 @@ SupportedCentresIntent what centers are supported
 SupportedCentresIntent which centers are supported
 SupportedCentresIntent which centers
 SupportedCentresIntent which centers do you know
+
+AIIntent who is the winner
+AIIntent who won
+AIIntent who will win
+
+PretzelIntent who has the best pretzels
+
+EventsIntent whats going on at {Centre}
+EventsIntent whats happening at {Centre}
+EventsIntent whats going on in {Centre}
+EventsIntent whats happening in {Centre}
+
+DealIntent whats on sale at {Centre}
+DealIntent whats on sale in {Centre}
+
+RetailerDealsIntent which stores are having sales at {Centre}
+RetailerDealsIntent which stores are on sale at {Centre}
+RetailerDealsIntent what stores are on sale at {Centre}
+RetailerDealsIntent what stores are having sales at {Centre}
+RetailerDealsIntent which stores are having sales in {Centre}
+RetailerDealsIntent which stores are on sale in {Centre}
+RetailerDealsIntent what stores are on sale in {Centre}
+RetailerDealsIntent what stores are having sales in {Centre}

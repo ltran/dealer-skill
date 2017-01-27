@@ -78,6 +78,29 @@ Westfield.prototype.intentHandlers = {
     handleSupportedTypesRequest(intent, session, response);
   },
 
+  "AIIntent": function(intent, session, response) {
+    response.tell("Well, in the end the A.I. always wins.");
+  },
+
+  "PretzelIntent": function(intent, session, response) {
+    response.tell("Wetzel's Pretzels is the best! You can find it in the basement level of San Francisco center.");
+  },
+
+  "EventsIntent": function(intent, session, response) {
+    var centre = session.attributes.centre || getCentreFromIntent(intent);
+    handleEventRequest(centre, response);
+  },
+
+  "DealsIntent": function(intent, session, response) {
+    var centre = session.attributes.centre || getCentreFromIntent(intent);
+    handleDealRequest(centre, response);
+  },
+
+  "RetailerDealsIntent": function(intent, session, response) {
+    var centre = session.attributes.centre || getCentreFromIntent(intent);
+    handleRetailerDealsRequest(centre, response);
+  },
+
   "AMAZON.HelpIntent": function(intent, session, response) {
     handleHelpRequest(response);
   },
@@ -123,7 +146,7 @@ function handleSupportedTypesRequest(intent, session, response) {
   var typeVal = session.attributes.type || getTypeFromIntent(intent);
   if (typeVal.error) {
     var repromptText = "Say events or deals.";
-    var speechOutput = "I can get you information on events or deals at " + centre.name + "." + repromptText;
+    var speechOutput = "I can get you information on events or deals at " + centre.name + ". " + repromptText;
 
     response.ask(speechOutput, repromptText);
     return;
@@ -159,10 +182,11 @@ function handleOneShotRequest(intent, session, response) {
 
 function handleDealRequest(centre, response) {
   dealerService.getDealsByCentre(centre.id, function(err, data) {
+    var speechText;
     if (err !== null) {
-      speechText = "<speak>We had a problem looking up deals at " + centre.name + ". Please try again later.</speak>";
+      speechText = "We had a problem looking up deals at " + centre.name + ". Please try again later. ";
     } else {
-      speechText = "<speak>We found the following deals at Westfield " + centre.name + ": ";
+      speechText = "We found the following deals at Westfield " + centre.name + ": ";
       
       var deals = data.data;
       for (var i in deals) {
@@ -181,16 +205,9 @@ function handleDealRequest(centre, response) {
           speechText = speechText + ". " + dealDescription;
         }
         speechText = speechText + " Located at " + location;
-        speechText = speechText + "<break time=\"0.2s\" />";
       }
-      speechText = speechText + "</speak>";
     }
-
-    var speechOutput = {
-      speech: speechText,
-      type: AlexaSkill.speechOutputType.SSML
-    };
-    response.tell(speechOutput);
+    response.tell(speechText);
   });
 }
 
@@ -198,11 +215,11 @@ function handleEventRequest(centre, response) {
   eventsService.getEventsByCenter(centre.id, function(err, data) {
     var speechText;
     if (err !== null) {
-      speechText = "<speak>We had a problem looking up events at " + centre.name + ". Please try again later.</speak>";
+      speechText = "We had a problem looking up events at " + centre.name + ". Please try again later. ";
     } else {
       var events = data.data;
 
-      speechText = "<speak>We found the following events at Westfield " + centre.name + ": ";
+      speechText = "We found the following events at Westfield " + centre.name + ": ";
       
       for (var i in events) {
         var eventTitle = getTextFromHTML(events[i].name);
@@ -211,20 +228,53 @@ function handleEventRequest(centre, response) {
         if (eventDescription) {
           speechText = speechText + ". " + eventDescription;
         }
-        speechText = speechText + "<break time=\"0.2s\" />";
-
       }
-            
-      speechText = speechText + "</speak>";
     }
 
-    var speechOutput = {
-      speech: speechText,
-      type: AlexaSkill.speechOutputType.SSML
-    };
-    response.tell(speechOutput);
+    response.tell(speechText);
   });  
 }
+
+
+function handleRetailerDealsRequest(centre, response) {
+  dealerService.getRetailerDealsByCentre(centre.id, function(err, data) {
+    var speechText;
+    if (err !== null) {
+      speechText = "We had a problem looking up deals at " + centre.name + ". Please try again later. ";
+    } else {
+      speechText = "The following retailers are having sales at Westfield " + centre.name + ": ";
+      
+      var deals = data.data;
+      var retailers = {}
+      for (var i in deals) {
+        var storeName = deals[i]._links.retailer.name;
+        if (retailers[storeName]) {
+          retailers[storeName]++;
+        } else {
+          retailers[storeName] = 1;
+        }
+      }
+      var keysSorted = Object.keys(retailers).sort(function(a,b){return retailers[a]-retailers[b]})
+      var max = 5;
+      for (var i=keysSorted.length-1; i >=0; i--) {
+        if (max != 5) {
+          speechText = speechText + ", ";
+        }
+        speechText = speechText + " " + keysSorted[i] + " has " + retailers[keysSorted[i]];
+        speechText = speechText + " deal";
+        if (retailers[keysSorted[i]] > 1) {
+          speechText = speechText + "s";
+        }
+        max--;
+        if (max == 0) {
+          break;
+        }
+      }
+    }
+    response.tell(speechText);
+  });  
+}
+
 
 function getAllCentresText() {
   var centreList = '';
