@@ -1,0 +1,25 @@
+DialogIntent {Type} {Centre}
+DialogIntent {Centre}
+DialogIntent {Type}
+
+OneShotIntent get {Type} for {Centre}
+OneShotIntent get {Type} from {Centre}
+OneShotIntent get {Type} at {Centre}
+OneShotIntent {Type} for {Centre}
+OneShotIntent {Type} at {Centre}
+OneShotIntent what are the {Type} at {Centre}
+OneShotIntent what are the {Type} in {Centre}
+OneShotIntent what are the {Type} from {Centre}
+OneShotIntent what is the {Type} at {Centre}
+OneShotIntent what {Type} at {Centre}
+OneShotIntent what {Type} are at {Centre}
+OneShotIntent what {Type} are in {Centre}
+OneShotIntent from {Centre} get me the {Type}
+
+SupportedCentresIntent list
+SupportedCentresIntent what centers
+SupportedCentresIntent list centers
+SupportedCentresIntent what centers are supported
+SupportedCentresIntent which centers are supported
+SupportedCentresIntent which centers
+SupportedCentresIntent which centers do you know

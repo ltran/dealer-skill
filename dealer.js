@@ -1,7 +1,7 @@
 var http = require('https');
 
 var getDealsByCentre = function (centreId, callback) {
-  requestDeals(process.env["WF_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId, function(err, data) {
+  requestDeals(process.env["WF_DEALS_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId + "&fields=title%2Csubtitle%2Cdescription%2Cstores%2C_links&per_page=3&state=live", function(err, data) {
     if (err) {
       return callback(err)
     }
@@ -11,7 +11,7 @@ var getDealsByCentre = function (centreId, callback) {
 }
 
 var getDealsByCentreByStore = function (centreId, storeId, callback) {
-  requestDeals(process.env["WF_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId + "&store_id=" + storeId, function(err, data) {
+  requestDeals(process.env["WF_DEALS_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId + "&store_id=" + storeId + "&fields=title%2Csubtitle%2Cdescription%2Cstores%2C_links&per_page=3&state=live", function(err, data) {
     if (err) {
       return callback(err)
     }
@@ -22,7 +22,7 @@ var getDealsByCentreByStore = function (centreId, storeId, callback) {
 }
 
 var getDealsByCentreByRetailer = function (centreId, retailerID, callback) {
-  requestDeals(process.env["WF_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId + "&retailer_id=" + retailerId, function(err, data) {
+  requestDeals(process.env["WF_DEALS_API_ENDPOINT"] + "?api_key=" + process.env["WF_API_KEY"], "&centre_id=" + centreId + "&retailer_id=" + retailerId + "&fields=title%2Csubtitle%2Cdescription%2Cstores%2C_links&per_page=3&state=live", function(err, data) {
     if (err) {
       return callback(err)
     }

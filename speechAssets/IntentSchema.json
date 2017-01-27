@@ -1,0 +1,42 @@
+{
+  "intents": [
+    {
+      "intent": "OneShotIntent",
+      "slots": [
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        },
+        {
+          "name": "Type",
+          "type": "LIST_OF_TYPES"
+        }
+      ]
+    },
+    {
+      "intent": "DialogIntent",
+      "slots": [
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        },
+        {
+          "name": "Type",
+          "type": "LIST_OF_TYPES"
+        }
+      ]
+    },
+    {
+      "intent": "SupportedCentresIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    }
+  ]
+}
