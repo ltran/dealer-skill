@@ -5,6 +5,7 @@ var APP_ID = "amzn1.ask.skill.924c6c93-dee3-4148-9e12-a6e40fd7c1e3"; //replace w
 
 var dealerService = require('./dealer');
 var eventsService = require('./events');
+var moviesService = require('./movies');
 var stripTags = require('./strip-tags');
 var constants = require('./constants');
 
@@ -94,6 +95,11 @@ Westfield.prototype.intentHandlers = {
   "DealsIntent": function(intent, session, response) {
     var centre = session.attributes.centre || getCentreFromIntent(intent);
     handleDealRequest(centre, response);
+  },
+
+  "MoviesIntent": function(intent, session, response) {
+    var centre = session.attributes.centre || getCentreFromIntent(intent);
+    handleMoviesRequest(centre, response);
   },
 
   "RetailerDealsIntent": function(intent, session, response) {
@@ -192,7 +198,7 @@ function handleDealRequest(centre, response) {
       for (var i in deals) {
         console.log(deals[i]);
 
-        var dealTitle = getTextFromHTML(deals[i].title);
+        var dealTitle = expandString(getTextFromHTML(deals[i].title));
         var dealDescription = getTextFromHTML(deals[i].description);
 
         var storeName = deals[i]._links.retailer.name;
@@ -240,7 +246,7 @@ function handleRetailerDealsRequest(centre, response) {
   dealerService.getRetailerDealsByCentre(centre.id, function(err, data) {
     var speechText;
     if (err !== null) {
-      speechText = "We had a problem looking up deals at " + centre.name + ". Please try again later. ";
+      speechText = "We had a problem looking up retailer deals at " + centre.name + ". Please try again later. ";
     } else {
       speechText = "The following retailers are having sales at Westfield " + centre.name + ": ";
       
@@ -269,6 +275,34 @@ function handleRetailerDealsRequest(centre, response) {
         if (max == 0) {
           break;
         }
+      }
+    }
+    response.tell(speechText);
+  });  
+}
+
+function handleMoviesRequest(centre, response) {
+  moviesService.getMoviesByCentre(centre.id, function(err, data) {
+    var speechText;
+    if (err !== null) {
+      speechText = "We had a problem looking up movies at " + centre.name + ". Please try again later. ";
+    } else {
+      speechText = "The following movies are playing at Westfield " + centre.name + ": ";
+      
+      var today = new Date();
+      var tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+
+      var movies = data.data.hits;
+
+      for (var i=0; i<movies.length; i++) {
+        if (i>0) {
+          speechText = speechText + ",";
+        }
+        speechText = speechText + " " + movies[i].title;
+      }
+      if (movies.length == 0) {
+        speechText = "Sorry, there are no movies playing right now at Westfield " + centre.name;
       }
     }
     response.tell(speechText);
@@ -334,6 +368,10 @@ function getTypeFromIntent(intent) {
       }
     }
   }
+}
+
+function expandString(val) {
+  return val.replace(/b1g1/gi, "buy one, get one")
 }
 
 function getTextFromHTML(val) {

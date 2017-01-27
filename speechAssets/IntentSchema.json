@@ -45,6 +45,15 @@
       ]
     },
     {
+      "intent": "MoviesIntent",
+      "slots": [
+        {
+          "name": "Centre",
+          "type": "LIST_OF_CENTRES"
+        }
+      ]
+    },
+    {
       "intent": "DealIntent",
       "slots": [
         {

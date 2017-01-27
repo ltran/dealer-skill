@@ -15,6 +15,9 @@ OneShotIntent what {Type} at {Centre}
 OneShotIntent what {Type} are at {Centre}
 OneShotIntent what {Type} are in {Centre}
 OneShotIntent from {Centre} get me the {Type}
+OneShotIntent {Type} at {Centre}
+OneShotIntent {Type} in {Centre}
+OneShotIntent {Type} from {Centre}
 
 SupportedCentresIntent list
 SupportedCentresIntent what centers
@@ -46,3 +49,9 @@ RetailerDealsIntent which stores are having sales in {Centre}
 RetailerDealsIntent which stores are on sale in {Centre}
 RetailerDealsIntent what stores are on sale in {Centre}
 RetailerDealsIntent what stores are having sales in {Centre}
+RetailerDealsIntent store sales in {Centre}
+RetailerDealsIntent store sales at {Centre}
+
+MoviesIntent what movies are playing at {Centre}
+MoviesIntent movies at {Centre}
+MoviesIntent movies playing at {Centre}
